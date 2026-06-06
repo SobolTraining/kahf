@@ -6,7 +6,6 @@
     <title>الكهف - القبلة والمواقيت</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
         body { font-family: 'Tajawal', sans-serif; }
@@ -53,11 +52,9 @@
     <!-- الترويسة الفيروزية -->
     <header class="bg-white dark:bg-slate-900 shadow-sm rounded-b-3xl mb-6 relative overflow-hidden text-center pt-6 pb-5 border-b border-teal-100 dark:border-slate-800">
         <div class="absolute top-0 right-0 w-32 h-32 bg-teal-50 dark:bg-teal-900/20 rounded-full mix-blend-multiply filter blur-2xl opacity-70 translate-x-10 -translate-y-10 pointer-events-none"></div>
-        
         <button onclick="window.location.href='index.html'" class="absolute top-6 right-4 bg-teal-50 dark:bg-slate-800 hover:bg-teal-100 text-teal-700 dark:text-teal-400 w-10 h-10 rounded-full flex items-center justify-center text-lg transition shadow-sm z-20 active:scale-95">
             <i class="fa-solid fa-arrow-right"></i>
         </button>
-
         <div class="relative z-10 w-16 h-16 mx-auto bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 rounded-full flex items-center justify-center text-3xl shadow-inner mb-2 border border-teal-200 dark:border-teal-800">
             <i class="fa-solid fa-compass"></i>
         </div>
@@ -66,15 +63,21 @@
     </header>
 
     <main class="max-w-md mx-auto px-5 space-y-6">
-
+        
         <!-- القسم الأول: اتجاه القبلة -->
         <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-md border border-teal-50 dark:border-slate-700 text-center relative overflow-hidden">
             <h2 class="text-lg font-bold text-teal-800 dark:text-teal-300 mb-2"><i class="fa-solid fa-kaaba text-teal-500 ml-1"></i> اتجاه القبلة</h2>
             <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-5 leading-relaxed">
-                القبلة هي وجهة قلوبنا. في لبنان، تقع الكعبة المشرفة تقريباً على زاوية <span class="font-bold text-teal-600 dark:text-teal-400">155 درجة</span> (الجنوب الشرقي).
+                يتم تحديد القبلة تلقائياً بناءً على موقعك. (الوضع الافتراضي: لبنان 155 درجة).
             </p>
-
+            
+            <!-- البوصلة مع الاتجاهات الأربعة -->
             <div class="compass-container dark:border-slate-700 dark:bg-slate-800 mb-5">
+                <span class="absolute top-2 left-1/2 -translate-x-1/2 text-[10px] font-extrabold text-teal-300 dark:text-slate-500">N</span>
+                <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-extrabold text-teal-300 dark:text-slate-500">S</span>
+                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-extrabold text-teal-300 dark:text-slate-500">E</span>
+                <span class="absolute left-2 top-1/2 -translate-y-1/2 text-[10px] font-extrabold text-teal-300 dark:text-slate-500">W</span>
+                
                 <div class="absolute inset-0 flex items-center justify-center">
                     <div class="w-4 h-4 bg-teal-500 rounded-full z-10 shadow-sm border-2 border-white"></div>
                 </div>
@@ -83,38 +86,36 @@
                     <div class="absolute top-10 bottom-10 left-1/2 w-0.5 bg-gradient-to-b from-teal-500 to-transparent -translate-x-1/2"></div>
                 </div>
             </div>
-
-            <button id="startCompassBtn" onclick="startCompass()" class="w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-3 rounded-xl transition shadow-lg flex justify-center items-center gap-2 active:scale-95">
+            
+            <button id="startCompassBtn" class="w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-3 rounded-xl transition shadow-lg flex justify-center items-center gap-2 active:scale-95">
                 تحديد القبلة الآن <i class="fa-solid fa-location-arrow"></i>
             </button>
-            <p id="compassError" class="text-[10px] text-rose-500 mt-3 hidden font-bold"></p>
+            <div id="compassError" class="hidden w-full mt-3"></div>
         </div>
 
         <!-- القسم الثاني: مواقيت الصلاة مع محوّل المناطق -->
         <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-md border border-teal-50 dark:border-slate-700 relative">
-            
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-base font-bold text-teal-800 dark:text-teal-300"><i class="fa-regular fa-clock text-teal-500 ml-1"></i> مواقيت الصلاة</h2>
                 <span id="currentDate" class="text-[10px] bg-teal-50 dark:bg-slate-700 text-teal-600 dark:text-teal-400 font-bold px-2 py-1 rounded-lg"></span>
             </div>
-
-            <!-- أزرار المناطق (Tabs) -->
+            
+            <!-- أزرار المناطق -->
             <div class="flex overflow-x-auto gap-2 mb-4 pb-2 modal-scroll" id="cityTabs">
                 <button onclick="changeCity('Beirut', this)" class="city-btn bg-teal-600 text-white px-4 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm active:scale-95 whitespace-nowrap">بيروت</button>
-                <button onclick="changeCity('Nabatiyeh', this)" class="city-btn bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-teal-100 dark:border-slate-700 px-4 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm active:scale-95 whitespace-nowrap">النبطية وصور</button>
+                <button onclick="changeCity('Nabatiyeh', this)" class="city-btn bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-teal-100 dark:border-slate-700 px-4 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm active:scale-95 whitespace-nowrap">بنت جبيل والنبطية</button>
+                <button onclick="changeCity('Tyre', this)" class="city-btn bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-teal-100 dark:border-slate-700 px-4 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm active:scale-95 whitespace-nowrap">صور</button>
                 <button onclick="changeCity('Baalbek', this)" class="city-btn bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-teal-100 dark:border-slate-700 px-4 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm active:scale-95 whitespace-nowrap">بعلبك</button>
                 <button onclick="changeCity('Hermel', this)" class="city-btn bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-teal-100 dark:border-slate-700 px-4 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm active:scale-95 whitespace-nowrap">الهرمل</button>
                 <button onclick="changeCity('Tripoli', this)" class="city-btn bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-teal-100 dark:border-slate-700 px-4 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm active:scale-95 whitespace-nowrap">طرابلس</button>
             </div>
-
+            
             <!-- أوقات الصلاة -->
             <div class="space-y-3" id="prayerTimesContainer">
                 <div class="text-center text-teal-600 text-xs py-4"><i class="fa-solid fa-spinner fa-spin text-lg mb-2"></i><br>جاري الحساب...</div>
             </div>
-            
-            <p class="text-[9px] text-gray-400 text-center mt-4 leading-relaxed">* المواقيت محسوبة فلكياً وفق طريقة مؤسسة لواء (قم) وتتطابق مع المعايير الجعفرية اللبنانية.</p>
+            <p class="text-[9px] text-gray-400 text-center mt-4 leading-relaxed">* المواقيت محسوبة فلكياً وفق طريقة مؤسسة لواء قم للمذهب الجعفري. قد تختلف لدقائق بسيطة عن بعض الرزنامات المحلّية بسبب حسابات الارتفاع عن سطح البحر.</p>
         </div>
-
     </main>
 
     <div id="footernav"></div>
@@ -122,30 +123,12 @@
 
     <script>
         // ==========================================
-        // 1. دوال رياضية لحساب مواقيت (تقويم الصايغ)
-        // ==========================================
-        function parseTimeStr(timeStr) {
-            let [hours, minutes] = timeStr.split(':');
-            return parseInt(hours) * 60 + parseInt(minutes);
-        }
-
-        function formatMinutesTo12H(totalMinutes) {
-            let hours = Math.floor(totalMinutes / 60) % 24;
-            let minutes = totalMinutes % 60;
-            const ampm = hours >= 12 ? 'م' : 'ص';
-            let displayHours = hours % 12;
-            displayHours = displayHours ? displayHours : 12;
-            let displayMinutes = minutes < 10 ? '0' + minutes : minutes;
-            return `${displayHours}:${displayMinutes} ${ampm}`;
-        }
-
-        // ==========================================
-        // 2. جلب مواقيت الصلاة الديناميكي
+        // 1. حساب مواقيت الصلاة
         // ==========================================
         document.addEventListener("DOMContentLoaded", () => {
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
             document.getElementById('currentDate').innerText = new Date().toLocaleDateString('ar-EG', dateOptions);
-            fetchPrayerTimes('Beirut'); 
+            fetchPrayerTimes('Beirut');
         });
 
         window.changeCity = function(cityCode, btnElement) {
@@ -158,36 +141,35 @@
 
         function fetchPrayerTimes(city) {
             const container = document.getElementById('prayerTimesContainer');
-            container.innerHTML = '<div class="text-center text-teal-600 text-xs py-4"><i class="fa-solid fa-spinner fa-spin text-lg mb-2"></i><br>جاري الحساب الدقيق...</div>';
-
+            container.innerHTML = '<div class="text-center text-teal-600 text-xs py-4"><i class="fa-solid fa-spinner fa-spin text-lg mb-2"></i><br>جاري الحساب...</div>';
+            
+            // 💡 التعديل هنا: method=0 لمؤسسة لواء قم (الشيعة)
             fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=Lebanon&method=0`)
                 .then(response => response.json())
                 .then(data => {
                     const timings = data.data.timings;
-                    
-                    let fajrMins = parseTimeStr(timings.Fajr);
-                    let sunsetMins = parseTimeStr(timings.Sunset);
-                    
-                    let imsakMins = fajrMins - 12;
-                    let fajrNextDay = fajrMins + (24 * 60); 
-                    let diffSunsetToFajr = fajrNextDay - sunsetMins;
-                    let midnightMins = sunsetMins + Math.floor(diffSunsetToFajr / 2);
-
+                    const formatTime = (timeStr) => {
+                        let [hours, minutes] = timeStr.split(':');
+                        hours = parseInt(hours);
+                        const ampm = hours >= 12 ? 'م' : 'ص';
+                        hours = hours % 12;
+                        hours = hours ? hours : 12;
+                        return `${hours}:${minutes} ${ampm}`;
+                    };
                     const timesArr = [
-                        { name: "الإمساك", time: formatMinutesTo12H(imsakMins), icon: "fa-cloud-moon", isBold: false },
-                        { name: "الفجر", time: formatMinutesTo12H(fajrMins), icon: "fa-cloud-sun", isBold: true },
-                        { name: "الشروق", time: formatMinutesTo12H(parseTimeStr(timings.Sunrise)), icon: "fa-sun", isBold: false },
-                        { name: "الظهر", time: formatMinutesTo12H(parseTimeStr(timings.Dhuhr)), icon: "fa-sun", isBold: true },
-                        { name: "المغرب", time: formatMinutesTo12H(parseTimeStr(timings.Maghrib)), icon: "fa-moon", isBold: true },
-                        { name: "منتصف الليل", time: formatMinutesTo12H(midnightMins), icon: "fa-star-and-crescent", isBold: false }
+                        { name: "الإمساك", time: formatTime(timings.Imsak), icon: "fa-cloud-moon", isBold: false },
+                        { name: "الفجر", time: formatTime(timings.Fajr), icon: "fa-cloud-sun", isBold: true },
+                        { name: "الشروق", time: formatTime(timings.Sunrise), icon: "fa-sun", isBold: false },
+                        { name: "الظهر", time: formatTime(timings.Dhuhr), icon: "fa-sun", isBold: true },
+                        { name: "المغرب", time: formatTime(timings.Maghrib), icon: "fa-moon", isBold: true },
+                        { name: "منتصف الليل", time: formatTime(timings.Midnight), icon: "fa-star-and-crescent", isBold: false }
                     ];
-
-                    container.innerHTML = ''; 
+                    
+                    container.innerHTML = '';
                     timesArr.forEach(t => {
                         const isHighlight = t.isBold ? "bg-teal-50 dark:bg-teal-900/20 border-teal-100 dark:border-teal-800" : "bg-gray-50 dark:bg-slate-700/50 border-gray-100 dark:border-slate-700";
                         const textColor = t.isBold ? "text-teal-800 dark:text-teal-300 font-bold" : "text-gray-600 dark:text-gray-300";
                         const timeColor = t.isBold ? "text-teal-600 dark:text-teal-400 font-bold" : "text-gray-500 dark:text-gray-400 font-medium";
-
                         container.innerHTML += `
                             <div class="flex justify-between items-center p-3 rounded-xl border ${isHighlight}">
                                 <div class="flex items-center gap-3">
@@ -195,8 +177,7 @@
                                     <span class="text-xs ${textColor}">${t.name}</span>
                                 </div>
                                 <span class="text-sm ${timeColor} tracking-wide" dir="ltr">${t.time}</span>
-                            </div>
-                        `;
+                            </div>`;
                     });
                 })
                 .catch(error => {
@@ -205,94 +186,133 @@
         }
 
         // ==========================================
+        // 2. البوصلة التفاعلية العالمية (GPS + الحساسات)
         // ==========================================
-        // 3. اتجاه القبلة (البوصلة التفاعلية) - نسخة تجربة المستخدم (UX) الفخمة
-        // ==========================================
-        function startCompass() {
-            const btn = document.getElementById('startCompassBtn');
-            const errorText = document.getElementById('compassError');
-            const needle = document.getElementById('compassNeedle');
-            const QIBLA_BEARING = 155.4; 
+        const startCompassBtn = document.getElementById('startCompassBtn');
+        const compassNeedle = document.getElementById('compassNeedle');
+        const compassError = document.getElementById('compassError');
+        
+        let dynamicQiblaBearing = 155.4; // القيمة الافتراضية لزاوية لبنان كخطة بديلة
 
-            // إعطاء تفاعل بصري يثبت أن الزر تم النقر عليه
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الاتصال بالبوصلة...';
-            errorText.classList.add('hidden');
+        function calculateQibla(userLat, userLng) {
+            const makkahLat = 21.422487 * (Math.PI / 180);
+            const makkahLng = 39.826206 * (Math.PI / 180);
+            const lat = userLat * (Math.PI / 180);
+            const lng = userLng * (Math.PI / 180);
 
-            // فحص أجهزة الآيفون (iOS 13+)
+            const y = Math.sin(makkahLng - lng);
+            const x = Math.cos(lat) * Math.tan(makkahLat) - Math.sin(lat) * Math.cos(makkahLng - lng);
+
+            let qibla = Math.atan2(y, x) * (180 / Math.PI);
+            return (qibla + 360) % 360;
+        }
+
+        startCompassBtn.addEventListener('click', () => {
+            startCompassBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري تحديد الموقع...';
+            compassError.classList.add('hidden');
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        dynamicQiblaBearing = calculateQibla(position.coords.latitude, position.coords.longitude);
+                        initCompassSensors();
+                    },
+                    (error) => {
+                        compassError.innerHTML = `
+                            <div class="bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700/50 p-3 rounded-xl text-right mt-2 text-gray-700 dark:text-gray-300 mb-3 shadow-sm">
+                                <span class="font-bold text-amber-600 dark:text-amber-400 text-xs mb-1 block"><i class="fa-solid fa-location-dot"></i> تعذر تحديد موقعك بدقة</span>
+                                <span class="text-[10px] leading-relaxed block mt-1">تم ضبط القبلة افتراضياً على زاوية (لبنان). لتحديد أدق، يرجى تفعيل الـ GPS.</span>
+                            </div>`;
+                        compassError.classList.remove('hidden');
+                        initCompassSensors();
+                    },
+                    { enableHighAccuracy: true }
+                );
+            } else {
+                initCompassSensors();
+            }
+        });
+
+        function initCompassSensors() {
             if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
                 DeviceOrientationEvent.requestPermission()
                     .then(permissionState => {
                         if (permissionState === 'granted') {
-                            window.addEventListener('deviceorientation', handleOrientation, true);
-                            btn.classList.add('hidden');
-                            errorText.classList.add('hidden');
+                            startOrientationListener();
                         } else {
-                            // إذا اليوزر رفض أو الآيفون قفلها تلقائياً
-                            showIosInstructions(errorText, btn);
+                            showIosInstructions();
                         }
                     })
                     .catch(err => {
-                        // في حال الخطأ أو منع المتصفح
-                        showIosInstructions(errorText, btn);
+                        showIosInstructions();
                     });
             } else {
-                // للأندرويد والأجهزة الأخرى (تعمل تلقائياً عادةً بدون Pop-up)
-                window.addEventListener('deviceorientationabsolute', handleOrientation, true);
-                window.addEventListener('deviceorientation', handleOrientation, true);
-                btn.classList.add('hidden');
-                errorText.classList.add('hidden');
-                
-                // فحص إذا لم تتحرك الإبرة (للتأكد أن حساسات الأندرويد تعمل)
-                setTimeout(() => {
-                    if (!needle.style.transform || needle.style.transform === '') {
-                        errorText.innerHTML = `
-                            <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl text-right mt-2 text-gray-700">
-                                <span class="font-bold text-amber-600 text-xs mb-1 block"><i class="fa-solid fa-triangle-exclamation"></i> البوصلة اليدوية تحتاج تنشيط</span>
-                                <span class="text-[10px] leading-relaxed block mt-1">
-                                    يبدو أن حساسات الهاتف لا تستجيب. يرجى <strong>تفعيل الموقع (GPS)</strong>، وتدوير الهاتف بيدك على شكل رقم (8) لتنشيط البوصلة، ثم المحاولة.
-                                </span>
-                            </div>`;
-                        errorText.classList.remove('hidden');
-                        btn.classList.remove('hidden');
-                        btn.innerHTML = 'إعادة المحاولة <i class="fa-solid fa-rotate-right"></i>';
-                    }
-                }, 2500);
-            }
-
-            function handleOrientation(event) {
-                let compassHeading;
-                if (event.webkitCompassHeading) {
-                    compassHeading = event.webkitCompassHeading; // للآيفون
-                } else if (event.alpha !== null) {
-                    compassHeading = Math.abs(event.alpha - 360); // للأندرويد
-                }
-
-                if (compassHeading !== undefined && compassHeading !== null) {
-                    let qiblaRotation = QIBLA_BEARING - compassHeading;
-                    needle.style.transform = `rotate(${qiblaRotation}deg)`;
-                }
+                startOrientationListener();
             }
         }
 
-        // دالة لعرض رسالة تعليمات أنيقة جداً لليوزر بدل رسالة الخطأ الجافة
-        function showIosInstructions(errorText, btn) {
-            errorText.innerHTML = `
-                <div class="bg-rose-50 border border-rose-200 p-3 rounded-xl text-right mt-2 text-gray-700 shadow-sm">
-                    <span class="font-bold text-rose-600 text-xs mb-1 block"><i class="fa-solid fa-lock"></i> البوصلة مقفلة من الآيفون!</span>
+        function startOrientationListener() {
+            window.addEventListener('deviceorientationabsolute', handleOrientation, true);
+            window.addEventListener('deviceorientation', handleOrientation, true);
+            startCompassBtn.classList.add('hidden');
+            
+            setTimeout(() => {
+                if (!compassNeedle.style.transform || compassNeedle.style.transform === '') {
+                    showAndroidInstructions();
+                }
+            }, 3000);
+        }
+
+        function handleOrientation(event) {
+            let compassHeading;
+            if (event.webkitCompassHeading) {
+                compassHeading = event.webkitCompassHeading;
+            } else if (event.alpha !== null) {
+                compassHeading = Math.abs(event.alpha - 360);
+            }
+
+            if (compassHeading !== undefined && compassHeading !== null) {
+                let qiblaRotation = dynamicQiblaBearing - compassHeading;
+                compassNeedle.style.transform = `rotate(${qiblaRotation}deg)`;
+            }
+        }
+
+        // رسالة تنبيه لمستخدمي الآيفون (حماية أبل)
+        function showIosInstructions() {
+            compassError.innerHTML = `
+                <div class="bg-rose-50 dark:bg-rose-900/30 border border-rose-200 dark:border-rose-700/50 p-3 rounded-xl text-right mt-2 text-gray-700 dark:text-gray-300 shadow-sm">
+                    <span class="font-bold text-rose-600 dark:text-rose-400 text-xs mb-1 block"><i class="fa-solid fa-lock"></i> البوصلة مقفلة من الآيفون!</span>
                     <span class="text-[10px] leading-relaxed block mt-1">
-                        أبل تمنع البوصلة افتراضياً. لتشغيلها بثوانٍ:
-                        <br><br>
-                        1. اذهب إلى <strong>إعدادات الهاتف (Settings)</strong><br>
-                        2. انزل واضغط على متصفح <strong>سفاري (Safari)</strong><br>
-                        3. انزل للأسفل وفعّل خيار <strong>(الوصول إلى الحركة والاتجاه)</strong><br>
-                        <span class="text-rose-500 font-bold text-[9px] mt-1 block">*أو (Motion & Orientation Access) بالإنجليزية.</span>
+                        لتشغيلها بثوانٍ: <br>
+                        1. اذهب إلى <strong>الإعدادات (Settings)</strong><br>
+                        2. اختر متصفح <strong>سفاري (Safari)</strong><br>
+                        3. فعّل خيار <strong>(الوصول إلى الحركة والاتجاه)</strong>
                     </span>
-                </div>
-            `;
-            errorText.classList.remove('hidden');
-            btn.innerHTML = 'تحديث والمحاولة مجدداً <i class="fa-solid fa-rotate-right"></i>';
-            btn.onclick = () => window.location.reload(); // تغيير وظيفة الزر ليعمل Refresh بعد ما اليوزر يضبط الإعدادات
+                </div>`;
+            compassError.classList.remove('hidden');
+            startCompassBtn.classList.remove('hidden');
+            startCompassBtn.innerHTML = 'تحديث والمحاولة مجدداً <i class="fa-solid fa-rotate-right"></i>';
+            startCompassBtn.onclick = () => window.location.reload();
         }
-   </script>
+
+        // 💡 التعديل هنا: إضافة اللغة الإنجليزية لتعليمات الأندرويد
+        function showAndroidInstructions() {
+            compassError.innerHTML = `
+                <div class="bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700/50 p-3 rounded-xl text-right mt-2 text-gray-700 dark:text-gray-300 shadow-sm">
+                    <span class="font-bold text-amber-600 dark:text-amber-400 text-xs mb-1 block"><i class="fa-solid fa-triangle-exclamation"></i> تنشيط البوصلة (أندرويد)</span>
+                    <span class="text-[10px] leading-relaxed block mt-1">
+                        تبدو الحساسات متوقفة. جرب التالي:<br>
+                        1. حرك هاتفك بيدك بشكل <strong>رقم 8</strong> لتنشيط الحساس.<br>
+                        2. إذا لم تعمل، من متصفح كروم اذهب إلى:<br>
+                        الإعدادات > إعدادات المواقع > أجهزة استشعار الحركة > السماح.<br>
+                        <span class="text-amber-600 font-bold block mt-1" dir="ltr">(Settings > Site Settings > Motion Sensors > Allow)</span>
+                    </span>
+                </div>`;
+            compassError.classList.remove('hidden');
+            startCompassBtn.classList.remove('hidden');
+            startCompassBtn.innerHTML = 'إعادة المحاولة <i class="fa-solid fa-rotate-right"></i>';
+            startCompassBtn.onclick = () => window.location.reload();
+        }
+    </script>
 </body>
 </html>
